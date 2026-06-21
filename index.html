@@ -6,29 +6,29 @@
 
 <!-- 微信/社交平台分享卡片 OG标签 -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="🎵 早到的U - Cover by Chris">
-<meta property="og:description" content="翻唱作品 · Gareth.T《早到的U》">
+<meta property="og:title" content="🎵 我很小朋友 - Cover by Chris">
+<meta property="og:description" content="翻唱作品 · Gareth.T《我很小朋友》">
 <meta property="og:image" content="https://chrischou1130.github.io/cover/cover.jpg">
 <meta property="og:url" content="https://chrischou1130.github.io/cover/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="早到的U - Cover by Chris">
-<meta name="twitter:description" content="翻唱作品 · Gareth.T《早到的U》">
+<meta name="twitter:title" content="我很小朋友 - Cover by Chris">
+<meta name="twitter:description" content="翻唱作品 · Gareth.T《我很小朋友》">
 <meta name="twitter:image" content="https://chrischou1130.github.io/cover/cover.jpg">
-<!-- 微信专用 -->
-<meta itemprop="name" content="早到的U - Cover by Chris">
+<meta itemprop="name" content="我很小朋友 - Cover by Chris">
 <meta itemprop="image" content="https://chrischou1130.github.io/cover/cover.jpg">
 <meta itemprop="description" content="翻唱作品 · 点击播放">
 
-<title>早到的U - Cover by Chris</title>
+<title>我很小朋友 - Cover by Chris</title>
 
 <style>
   :root {
-    --album-color: #8b6fae;
-    --accent: #a78bda;
-    --accent-light: #c4b5fd;
-    --text-dim: #444;
-    --glow: rgba(167,139,218,0.6);
-    --glow-soft: rgba(167,139,218,0.15);
+    --album-color: #376392;
+    --accent: linear-gradient(135deg, #2B4868, #376392, #6C9AC4);
+    --accent-solid: #6C9AC4;
+    --accent-light: #CCD8EB;
+    --text-dim: #7a8ca8;
+    --glow: rgba(108,154,196,0.6);
+    --glow-soft: rgba(108,154,196,0.2);
   }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   body {
@@ -41,8 +41,8 @@
 
   .ambient-bg { position:fixed; inset:0; pointer-events:none; z-index:0; }
   .ambient-orb { position:absolute; border-radius:50%; filter:blur(90px); opacity:0.18; animation:orbFloat 14s ease-in-out infinite; }
-  .ambient-orb:nth-child(1) { width:300px; height:300px; background:var(--album-color); top:-80px; left:-80px; }
-  .ambient-orb:nth-child(2) { width:260px; height:260px; background:#4a3a6e; bottom:-60px; right:-60px; animation-delay:-5s; }
+  .ambient-orb:nth-child(1) { width:300px; height:300px; background:#376392; top:-80px; left:-80px; }
+  .ambient-orb:nth-child(2) { width:260px; height:260px; background:#2B4868; bottom:-60px; right:-60px; animation-delay:-5s; }
   @keyframes orbFloat { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(25px,-25px) scale(1.05);} }
 
   .player {
@@ -52,14 +52,23 @@
     display:flex; flex-direction:column; align-items:center;
   }
 
-  /* 封面 */
   .cover-wrapper { position:relative; margin-bottom:16px; cursor:pointer; }
   .cover-ring {
     position:absolute; inset:-5px; border-radius:50%;
-    border:1.5px solid rgba(167,139,218,0.15);
+    border:1.5px solid rgba(108,154,196,0.2);
     animation:ringPulse 4s ease-in-out infinite;
   }
   @keyframes ringPulse { 0%,100%{opacity:0.3;transform:scale(1);} 50%{opacity:0.7;transform:scale(1.03);} }
+
+  @keyframes heart-beat {
+    0%{opacity:0.3; transform:scale(1); border-color:rgba(108,154,196,0.2);}
+    12%{opacity:1; transform:scale(1.12); border-color:rgba(108,154,196,0.7); box-shadow:0 0 20px rgba(108,154,196,0.4);}
+    22%{opacity:0.7; transform:scale(1.08); border-color:rgba(108,154,196,0.45);}
+    35%{opacity:0.9; transform:scale(1.1); border-color:rgba(108,154,196,0.55); box-shadow:0 0 16px rgba(108,154,196,0.3);}
+    48%{opacity:0.6; transform:scale(1.03); border-color:rgba(108,154,196,0.3);}
+    100%{opacity:0.3; transform:scale(1); border-color:rgba(108,154,196,0.2); box-shadow:0 0 0 transparent;}
+  }
+  .cover-ring.heart-beat { animation: heart-beat 0.8s ease-out; }
   .cover {
     width:150px; height:150px; border-radius:50%; object-fit:cover;
     box-shadow:0 16px 48px rgba(0,0,0,0.5);
@@ -68,17 +77,17 @@
   .cover.paused { animation-play-state:paused; }
   @keyframes spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
-  /* 歌名 */
   .song-info { text-align:center; margin-bottom:4px; }
   .song-title { font-size:18px; font-weight:600; letter-spacing:0.5px; }
-  .song-artist { font-size:12px; color:var(--text-dim); letter-spacing:0.5px; }
+  .song-artist { font-size:12px; font-weight:600; color:var(--text-dim); letter-spacing:1.2px; text-shadow:0 0 8px rgba(108,154,196,0.35); }
 
-  /* ====== 歌词区域 ====== */
   .lyrics-section {
     flex:1; width:100%; min-height:160px;
     display:flex; flex-direction:column; justify-content:center; align-items:center;
     gap:8px; margin-bottom:6px; position:relative;
     perspective:400px;
+    /* ✅ NO特效需要的过渡 */
+    transition:box-shadow 0.15s ease-out;
   }
 
   .lyric-prev {
@@ -120,7 +129,7 @@
   .lyric-current.active .lyric-char {
     opacity:1; color:#fff; filter:blur(0);
     transform:translateY(0) scale(1);
-    text-shadow:0 0 14px var(--glow-soft), 0 0 30px rgba(167,139,218,0.08);
+    text-shadow:0 0 14px var(--glow-soft), 0 0 30px rgba(108,154,196,0.1);
   }
 
   .lyric-current.dissolving .lyric-char {
@@ -140,7 +149,6 @@
     pointer-events:none; z-index:0; opacity:0.4;
   }
 
-  /* 进度条 */
   .progress-section { width:100%; margin-bottom:10px; }
   .progress-bar {
     position:relative; height:3px;
@@ -148,18 +156,17 @@
   }
   .progress-fill {
     position:absolute; left:0; top:0; bottom:0;
-    background:linear-gradient(90deg, var(--accent), var(--accent-light));
+    background:var(--accent);
     border-radius:3px; width:0%; transition:width 0.1s linear;
   }
   .progress-thumb {
     position:absolute; top:50%; transform:translate(-50%,-50%) scale(0);
     width:12px; height:12px; background:#fff; border-radius:50%;
-    box-shadow:0 0 10px rgba(167,139,218,0.5); transition:transform 0.15s;
+    box-shadow:0 0 10px rgba(108,154,196,0.5); transition:transform 0.15s;
   }
   .progress-bar:active .progress-thumb { transform:translate(-50%,-50%) scale(1); }
   .time-row { display:flex; justify-content:space-between; font-size:11px; color:var(--text-dim); }
 
-  /* 控制按钮 */
   .controls { display:flex; align-items:center; justify-content:center; gap:32px; }
   .ctrl-btn {
     background:none; border:none; cursor:pointer;
@@ -170,10 +177,92 @@
   .ctrl-btn svg { width:24px; height:24px; fill:rgba(255,255,255,0.5); }
   .ctrl-btn.play-pause {
     width:54px; height:54px;
-    background:linear-gradient(135deg, var(--accent), var(--accent-light));
-    box-shadow:0 4px 20px rgba(167,139,218,0.35); border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 4px 20px rgba(54,99,146,0.45); border-radius:50%;
   }
   .ctrl-btn.play-pause svg { fill:#fff; width:24px; height:24px; }
+
+  /* ===== 惊讶特效专用 ===== */
+  @keyframes pulse-no {
+    0%,100%{box-shadow: 0 0 0 rgba(167,139,218,0);}
+    50%{box-shadow: 0 0 35px rgba(167,139,218,0.55), 0 0 70px rgba(108,154,196,0.25);}
+  }
+  .tier-no { animation: pulse-no 0.4s ease-out; }
+
+  @keyframes pulse-wow {
+    0%,100%{box-shadow: 0 0 0 rgba(108,154,196,0);}
+    50%{box-shadow: 0 0 22px rgba(108,154,196,0.5), 0 0 45px rgba(108,154,196,0.2);}
+  }
+  .tier-wow { animation: pulse-wow 0.35s ease-out; }
+
+  @keyframes flash-perfect {
+    0%{box-shadow: inset 0 0 0 rgba(255,255,255,0);}
+    30%{box-shadow: inset 0 0 120px rgba(255,255,255,0.22);}
+    100%{box-shadow: inset 0 0 0 rgba(255,255,255,0);}
+  }
+  .tier-perfect { animation: flash-perfect 0.5s ease-out; }
+
+  @keyframes flash-wow {
+    0%{box-shadow: inset 0 0 0 rgba(108,154,196,0);}
+    25%{box-shadow: inset 0 0 100px rgba(108,154,196,0.16);}
+    100%{box-shadow: inset 0 0 0 rgba(108,154,196,0);}
+  }
+  .tier-flash-wow { animation: flash-wow 0.4s ease-out; }
+
+  @keyframes ring-expand {
+    0%{opacity:0; transform:translate(-50%,-50%) scale(0.4);}
+    20%{opacity:1; transform:translate(-50%,-50%) scale(1.08);}
+    70%{opacity:1; transform:translate(-50%,-130%) scale(0.95);}
+    100%{opacity:0; transform:translate(-50%,-160%) scale(0.8);}
+  }
+  .perfect-badge {
+    position:fixed; top:42%; left:50%;
+    font-size:24px; font-weight:700; color:#fff;
+    text-shadow:0 0 24px rgba(255,255,255,0.7), 0 2px 8px rgba(0,0,0,0.3);
+    pointer-events:none; z-index:200;
+    transform:translate(-50%,-50%);
+    animation:float-perfect 1.4s cubic-bezier(.25,.46,.45,.94) forwards;
+  }
+
+  @keyframes shake-no {
+    0%{opacity:0; transform:translate(-50%,-50%) scale(0.5);}
+    10%{opacity:1; transform:translate(-50%,-50%) scale(1.05);}
+    20%{opacity:1; transform:translate(-50%,-50%) rotate(-8deg) translateX(-5px);}
+    35%{opacity:1; transform:translate(-50%,-50%) rotate(7deg) translateX(4px);}
+    50%{opacity:1; transform:translate(-50%,-50%) rotate(-5deg) translateX(-3px);}
+    65%{opacity:1; transform:translate(-50%,-50%) rotate(4deg) translateX(2px);}
+    80%{opacity:0.9; transform:translate(-50%,-110%) rotate(0deg) translateX(0);}
+    100%{opacity:0; transform:translate(-50%,-130%) rotate(0deg) translateX(0);}
+  }
+  .no-badge {
+    position:fixed; top:42%; left:50%;
+    font-size:20px; font-weight:700; color:#d4c5f9;
+    text-shadow:0 0 16px rgba(167,139,218,0.55), 0 2px 6px rgba(0,0,0,0.35);
+    pointer-events:none; z-index:200;
+    transform:translate(-50%,-50%);
+    animation:shake-no 1.3s cubic-bezier(.25,.46,.45,.94) forwards;
+  }
+
+  @keyframes ring-expand {
+    0%{opacity:0.8; transform:translate(-50%,-50%) scale(0.3);}
+    100%{opacity:0; transform:translate(-50%,-50%) scale(2.8);}
+  }
+
+  @keyframes float-wow {
+    0%{opacity:0; transform:translate(-50%,-50%) scale(0.3);}
+    18%{opacity:1; transform:translate(-50%,-50%) scale(1.12);}
+    45%{opacity:1; transform:translate(-50%,-50%) scale(1.04);}
+    80%{opacity:0.9; transform:translate(-50%,-140%) scale(0.92);}
+    100%{opacity:0; transform:translate(-50%,-170%) scale(0.78);}
+  }
+  .wow-badge {
+    position:fixed; top:42%; left:50%;
+    font-size:28px; font-weight:700; color:#a8d4ff;
+    text-shadow:0 0 22px rgba(108,154,196,0.7), 0 0 44px rgba(108,154,196,0.3), 0 2px 8px rgba(0,0,0,0.3);
+    pointer-events:none; z-index:200;
+    transform:translate(-50%,-50%);
+    animation:float-wow 1.6s cubic-bezier(.25,.46,.45,.94) forwards;
+  }
 
   @media (min-width:500px) and (min-height:750px) {
     .cover { width:200px; height:200px; }
@@ -197,7 +286,7 @@
   </div>
 
   <div class="song-info">
-    <div class="song-title">早到的U</div>
+    <div class="song-title">我很小朋友</div>
     <div class="song-artist">Cover by Chris</div>
   </div>
 
@@ -234,42 +323,40 @@
   </div>
 </div>
 
-<audio id="audio" preload="metadata" src="早到的U Chris.mp3"></audio>
+<audio id="audio" preload="metadata" src="我很小朋友 Chris.mp3"></audio>
 
 <script>
 const lyricsData = [
-  {t:15.15,l:'本来 上车前要表白'},
-  {t:20.22,l:'算好时间彩排 三分钟对白'},
-  {t:28.84,l:'意外 怎么会没意外'},
-  {t:33.98,l:'刚要开口 你的Uber居然已经在'},
-  {t:41.56,l:'没见过 Uber会早来'},
-  {t:47.66,l:'我的设计 瞬间崩坏'},
-  {t:55.34,l:'沦为 说拜拜'},
-  {t:62.26,l:'带了伞 雨就不来'},
-  {t:65.65,l:'过隧道 电话就来'},
-  {t:69.04,l:'每次我 点的主菜'},
-  {t:71.75,l:'等到发呆 想取消就来'},
-  {t:75.94,l:'有人点烟 车就来'},
-  {t:79.40,l:'没在找护照时 它就跑出来'},
-  {t:85.29,l:'人生就是这样'},
-  {t:89.58,l:'如果我不喜欢你'},
-  {t:92.14,l:'我肯定会是 你的最爱'},
-  {t:111.05,l:'看 翻起来的领子'},
-  {t:116.24,l:'整晚我都不安 想为你整理'},
-  {t:123.44,l:'很可惜 我们的关系 没到那里'},
-  {t:132.75,l:'伸出手碰你身体 有点不合适'},
-  {t:140.11,l:'只好不语'},
-  {t:144.06,l:'带了伞 雨就不来'},
-  {t:147.45,l:'过隧道 电话就来'},
-  {t:150.82,l:'每次我 点的主菜'},
-  {t:153.53,l:'等到发呆 想取消就来'},
-  {t:157.66,l:'有人点烟 车就来'},
-  {t:161.18,l:'没在找护照时 它就跑出来'},
-  {t:167.20,l:'妈的 又是这样'},
-  {t:171.33,l:'如果我不喜欢你'},
-  {t:174.01,l:'我肯定会是 你的最爱'},
-  {t:180.52,l:'你的最爱'},
-  {t:190.69,l:'你的最爱'}
+  {t:14.96,l:'我很小朋友'},
+  {t:18.355,l:'我怎玩 大人不必插手'},
+  {t:22.221,l:'碰瘀不用救 沒跌死 自動學會走'},
+  {t:30.22,l:'我很小朋友'},
+  {t:34.184,l:'我仍然 相信着 魔法豆'},
+  {t:38.157,l:'別理解 我的理由 你只要 陪住我 漫遊'},
+  {t:46.223,l:'若你想贈我一點福利'},
+  {t:50.736,l:'幫我學溫柔'},
+  {t:53.95,l:'甜甜圈上鋪一圈奶油 享受'},
+  {t:61.702,l:'我很少朋友'},
+  {t:64.993,l:'舞會中逗留不到太久'},
+  {t:68.979,l:'我不懂做作 扮會品味 絕代美酒'},
+  {t:77.057,l:'我很少朋友'},
+  {t:80.938,l:'有時寧願信任 貓與狗'},
+  {t:84.805,l:'悶了找 我的鋼琴 也可以 全日與電腦 hang out'},
+  {t:93.272,l:'逃脫又怕 被遺漏'},
+  {t:95.568,l:'跟隊去 又嫌悶透 起個防護罩 活在裏頭'},
+  {t:100.968,l:'如果實在悶 直接跳到虛構'},
+  {t:104.594,l:'童年玩偶 陪着我走'},
+  {t:108.272,l:'我很少朋友'},
+  {t:110.455,l:'應有 在我小宇宙 都有'},
+  {t:115.996,l:'遊樂場裏 當出口 完全掘頭 我就向心走'},
+  {t:123.692,l:'都想找雙手 牽手同遊'},
+  {t:131.665,l:'不加思索 埋頭愛我 銅牆開出缺口'},
+  {t:143.335,l:'很少 好友'},
+  {t:147.547,l:'但間中 我都盼望'},
+  {t:150.205,l:'有一個 能伴我 偷走'},
+  {t:155.365,l:'有位小朋友'},
+  {t:158.944,l:'要找一樣年紀的對手'},
+  {t:162.903,l:'哪天孤獨夠 願有加入電玩 那位隊友'}
 ];
 
 const audio = document.getElementById('audio');
@@ -287,9 +374,11 @@ const albumCover = document.getElementById('albumCover');
 const lyricPrev = document.getElementById('lyricPrev');
 const lyricCurrent = document.getElementById('lyricCurrent');
 const lyricNext = document.getElementById('lyricNext');
+const lyricsSection = document.getElementById('lyricsSection');
 
 let currentLineIndex = -1;
 let isPlaying = false;
+let sprayInterval = null; // perfect持续喷雾定时器
 
 /* 封面点击播放/暂停 */
 function togglePlay() { isPlaying ? pause() : play(); }
@@ -310,10 +399,10 @@ function initWave() {
 function drawWave() {
   waveCtx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
   const baseY = waveCanvas.height;
-  
-  [{color:'rgba(167,139,218,0.08)',offset:30,amp:1.5,speed:0.6},
-   {color:'rgba(167,139,218,0.15)',offset:15,amp:1.0,speed:1.0},
-   {color:'rgba(196,181,253,0.1)',offset:5,amp:0.7,speed:1.4}
+
+  [{color:'rgba(43,72,104,0.12)',offset:30,amp:1.5,speed:0.6},
+   {color:'rgba(54,99,146,0.18)',offset:15,amp:1.0,speed:1.0},
+   {color:'rgba(108,154,196,0.12)',offset:5,amp:0.7,speed:1.4}
   ].forEach(layer => {
     waveCtx.beginPath();
     waveCtx.moveTo(0, baseY);
@@ -334,11 +423,11 @@ function drawWave() {
     waveCtx.fillStyle = layer.color;
     waveCtx.fill();
   });
-  
+
   requestAnimationFrame(drawWave);
 }
 
-/* 弹珠粒子 */
+/* ===== 彩虹弹珠粒子 ===== */
 const particleCanvas = document.getElementById('particleCanvas');
 const pCtx = particleCanvas.getContext('2d');
 let particles = [];
@@ -350,60 +439,102 @@ function initParticle() {
   drawParticles();
 }
 
+/* 往 particles 数组推一颗弹珠（内部共用） */
+function pushMarble(size) {
+  const centerX = particleCanvas.width / 2;
+  const centerY = particleCanvas.height * 0.4;
+  particles.push({
+    x: centerX + (Math.random() - 0.5) * 140,
+    y: centerY + (Math.random() - 0.5) * 20,
+    vx: (Math.random() - 0.5) * 2.5,
+    vy: -Math.random() * 4.5 - 1.5,
+    size: size,
+    gravity: 0.15,
+    damping: 0.5,
+    rotation: Math.random() * Math.PI * 2,
+    rotSpeed: (Math.random() - 0.5) * 0.12,
+    hue: Math.random() * 360,
+    life: 1,
+    decay: 0.003 + Math.random() * 0.002,
+    squish: 0,
+    settled: false,
+    bounces: 0,
+    maxBounces: 3 + Math.floor(Math.random() * 3)
+  });
+}
+
+/* ===== 三档弹珠：浮动阈值 + Perfect持续喷雾 ===== */
 function spawnMarbles(text) {
   if (!text || !particleCanvas.width) return;
   const centerX = particleCanvas.width / 2;
   const centerY = particleCanvas.height * 0.4;
-  const groundY = particleCanvas.height * 0.82;
-  
-  for (let i = 0; i < text.length; i++) {
-    const count = 2 + Math.floor(Math.random() * 2);
-    for (let j = 0; j < count; j++) {
-      const size = 3 + Math.random() * 4;
-      particles.push({
-        x: centerX + (Math.random() - 0.5) * 120,
-        y: centerY + (Math.random() - 0.5) * 20,
-        vx: (Math.random() - 0.5) * 2,
-        vy: -Math.random() * 4 - 2,
-        size: size,
-        gravity: 0.15,
-        damping: 0.5,
-        rotation: Math.random() * Math.PI * 2,
-        rotSpeed: (Math.random() - 0.5) * 0.1,
-        hue: 250 + Math.random() * 30,
-        life: 1,
-        decay: 0.003 + Math.random() * 0.002,
-        squish: 0,
-        settled: false,
-        bounces: 0,
-        maxBounces: 3 + Math.floor(Math.random() * 3)
-      });
-    }
+
+  const base = Math.floor(text.length * 1.0) + 2;
+  const totalMarbles = Math.max(0, Math.round(base * (0.25 + Math.random() * 0.85)));
+
+  let sizeRange, tier;
+  if (totalMarbles <= 5) {
+    // 普通：无特效
+    sizeRange = [3, 8]; tier = 'normal';
+  } else if (totalMarbles <= 9) {
+    // NO：抖动 + 小字飘走
+    sizeRange = [5, 10]; tier = 'no';
+  } else if (totalMarbles <= 12) {
+    // WOW：脉冲呼吸 + 蓝色闪光
+    sizeRange = [3, 8]; tier = 'wow';
+  } else {
+    // PERFECT：弹珠雨 + 白光
+    sizeRange = [2, 5]; tier = 'perfect';
   }
+
+  for (let i = 0; i < totalMarbles; i++) {
+    pushMarble(sizeRange[0] + Math.random() * (sizeRange[1] - sizeRange[0]));
+  }
+
+  return tier;
+}
+
+/* ===== PERFECT 持续喷雾 5 秒 ===== */
+function startPerfectSpray() {
+  // 清理旧的喷雾
+  if (sprayInterval) { clearInterval(sprayInterval); sprayInterval = null; }
+  let sprayCount = 0;
+  const maxSprays = 50; // 50 × 100ms = 5秒
+  sprayInterval = setInterval(() => {
+    sprayCount++;
+    const batch = 8 + Math.floor(Math.random() * 8); // 8~15颗
+    for (let i = 0; i < batch; i++) {
+      pushMarble(2 + Math.random() * 3); // 2~5px小弹珠
+    }
+    if (sprayCount >= maxSprays) {
+      clearInterval(sprayInterval);
+      sprayInterval = null;
+    }
+  }, 100);
 }
 
 function drawParticles() {
   if (!particleCanvas.width) { requestAnimationFrame(drawParticles); return; }
-  
+
   pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
   const groundY = particleCanvas.height * 0.82;
-  
-  pCtx.strokeStyle = 'rgba(167,139,218,0.05)';
+
+  pCtx.strokeStyle = 'rgba(108,154,196,0.06)';
   pCtx.lineWidth = 1;
   pCtx.beginPath();
   pCtx.moveTo(0, groundY);
   pCtx.lineTo(particleCanvas.width, groundY);
   pCtx.stroke();
-  
+
   particles = particles.filter(p => p.life > 0);
-  
+
   particles.forEach(p => {
     if (!p.settled) {
       p.vy += p.gravity;
       p.x += p.vx;
       p.y += p.vy;
       p.rotation += p.rotSpeed;
-      
+
       if (p.y + p.size >= groundY) {
         p.y = groundY - p.size;
         p.vy *= -p.damping;
@@ -411,7 +542,7 @@ function drawParticles() {
         p.bounces++;
         p.squish = Math.min(0.5, Math.abs(p.vy) * 0.06);
         p.rotSpeed *= 0.85;
-        
+
         if (Math.abs(p.vy) < 0.4 || p.bounces >= p.maxBounces) {
           p.settled = true;
           p.squish = 0;
@@ -422,38 +553,113 @@ function drawParticles() {
         p.squish *= 0.9;
       }
     }
-    
+
     p.life -= p.settled ? p.decay * 0.5 : p.decay;
     const alpha = Math.max(0, p.life);
     if (alpha <= 0) return;
-    
+
     pCtx.save();
     pCtx.translate(p.x, p.y);
     pCtx.rotate(p.rotation);
     const sx = 1 + p.squish * 0.3;
     const sy = 1 - p.squish * 0.4;
     pCtx.scale(sx, sy);
-    
+
     const grad = pCtx.createRadialGradient(-p.size*0.3, -p.size*0.3, p.size*0.1, 0, 0, p.size);
-    grad.addColorStop(0, `hsla(${p.hue}, 70%, 85%, ${alpha*0.9})`);
-    grad.addColorStop(0.3, `hsla(${p.hue}, 65%, 65%, ${alpha*0.8})`);
-    grad.addColorStop(0.7, `hsla(${p.hue}, 60%, 45%, ${alpha*0.7})`);
-    grad.addColorStop(1, `hsla(${p.hue}, 55%, 30%, ${alpha*0.5})`);
-    
+    const brightHue = p.hue + (Math.random() - 0.5) * 60;
+    grad.addColorStop(0, `hsla(${brightHue}, 100%, 92%, ${alpha})`);
+    grad.addColorStop(0.2, `hsla(${brightHue}, 95%, 78%, ${alpha*0.95})`);
+    grad.addColorStop(0.5, `hsla(${brightHue - 5}, 90%, 58%, ${alpha*0.85})`);
+    grad.addColorStop(1, `hsla(${brightHue + 15}, 85%, 40%, ${alpha*0.65})`);
+
     pCtx.beginPath();
     pCtx.arc(0, 0, p.size, 0, Math.PI*2);
     pCtx.fillStyle = grad;
     pCtx.fill();
-    
+
+    pCtx.shadowColor = `hsla(${brightHue}, 100%, 75%, ${alpha*0.6})`;
+    pCtx.shadowBlur = p.size * 3.5;
     pCtx.beginPath();
-    pCtx.arc(-p.size*0.25, -p.size*0.25, p.size*0.35, 0, Math.PI*2);
-    pCtx.fillStyle = `rgba(255,255,255,${alpha*0.5})`;
+    pCtx.arc(0, 0, p.size * 0.6, 0, Math.PI*2);
+    pCtx.fillStyle = `hsla(${brightHue}, 100%, 85%, ${alpha*0.5})`;
     pCtx.fill();
-    
+    pCtx.shadowBlur = 0;
+
+    pCtx.beginPath();
+    pCtx.arc(-p.size*0.28, -p.size*0.28, p.size*0.4, 0, Math.PI*2);
+    pCtx.fillStyle = `rgba(255,255,255,${alpha*0.8})`;
+    pCtx.fill();
+
     pCtx.restore();
   });
-  
+
   requestAnimationFrame(drawParticles);
+}
+
+/* ===== 惊讶特效（改用 CSS class 方案，稳妥可过渡） ===== */
+function triggerTierEffect(tier) {
+  if (tier === 'normal') {
+    // 普通档：无特效
+    return;
+
+  } else if (tier === 'no') {
+    lyricsSection.classList.remove('tier-no');
+    void lyricsSection.offsetWidth;
+    lyricsSection.classList.add('tier-no');
+    setTimeout(() => lyricsSection.classList.remove('tier-no'), 400);
+
+    const badge = document.createElement('div');
+    badge.className = 'no-badge';
+    badge.textContent = '😅 nice try';
+    document.body.appendChild(badge);
+    setTimeout(() => badge.remove(), 1300);
+
+  } else if (tier === 'wow') {
+    lyricsSection.classList.remove('tier-wow');
+    void lyricsSection.offsetWidth;
+    lyricsSection.classList.add('tier-wow');
+    setTimeout(() => lyricsSection.classList.remove('tier-wow'), 400);
+
+    document.body.classList.remove('tier-flash-wow');
+    void document.body.offsetWidth;
+    document.body.classList.add('tier-flash-wow');
+    setTimeout(() => document.body.classList.remove('tier-flash-wow'), 400);
+
+    // 封面光环脉冲呼吸（心跳）
+    const ring = document.querySelector('.cover-ring');
+    if (ring) {
+      ring.classList.remove('heart-beat');
+      void ring.offsetWidth;
+      ring.classList.add('heart-beat');
+      setTimeout(() => ring.classList.remove('heart-beat'), 900);
+    }
+
+    // 光环扩散
+    const expandRing = document.createElement('div');
+    expandRing.style.cssText = 'position:fixed;top:42%;left:50%;width:80px;height:80px;margin-left:-40px;margin-top:-40px;border-radius:50%;border:2px solid rgba(108,154,196,0.55);pointer-events:none;z-index:199;animation:ring-expand 0.7s ease-out forwards;';
+    document.body.appendChild(expandRing);
+    setTimeout(() => expandRing.remove(), 750);
+
+    const badge = document.createElement('div');
+    badge.className = 'wow-badge';
+    badge.textContent = '🔥 wow';
+    document.body.appendChild(badge);
+    setTimeout(() => badge.remove(), 1700);
+
+  } else if (tier === 'perfect') {
+    document.body.classList.remove('tier-perfect');
+    void document.body.offsetWidth;
+    document.body.classList.add('tier-perfect');
+    setTimeout(() => document.body.classList.remove('tier-perfect'), 550);
+
+    const badge = document.createElement('div');
+    badge.className = 'perfect-badge';
+    badge.textContent = '✨ perfect';
+    document.body.appendChild(badge);
+    setTimeout(() => badge.remove(), 1500);
+
+    startPerfectSpray();
+  }
 }
 
 /* 歌词逻辑 */
@@ -480,28 +686,29 @@ function renderLine(text) {
 
 function switchLine(newIdx) {
   if (newIdx === currentLineIndex) return;
-  
+
   if (currentLineIndex >= 0) {
-    spawnMarbles(lyricsData[currentLineIndex].l);
+    const tier = spawnMarbles(lyricsData[currentLineIndex].l);
+    triggerTierEffect(tier);
   }
-  
+
   if (currentLineIndex >= 0) {
     lyricCurrent.classList.add('dissolving');
     lyricCurrent.classList.remove('active');
   }
-  
+
   currentLineIndex = newIdx;
-  
+
   setTimeout(() => {
     renderLine(lyricsData[newIdx].l);
-    
+
     if (newIdx > 0) {
       lyricPrev.textContent = lyricsData[newIdx - 1].l;
       lyricPrev.style.opacity = '1';
     } else {
       lyricPrev.textContent = '';
     }
-    
+
     if (newIdx < lyricsData.length - 1) {
       lyricNext.textContent = lyricsData[newIdx + 1].l;
     } else {
