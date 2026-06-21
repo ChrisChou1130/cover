@@ -210,10 +210,15 @@
   .tier-flash-wow { animation: flash-wow 0.4s ease-out; }
 
   @keyframes ring-expand {
+    0%{width:60px;height:60px;opacity:1;}
+    100%{width:200px;height:200px;opacity:0;}
+  }
+
+  @keyframes float-perfect {
     0%{opacity:0; transform:translate(-50%,-50%) scale(0.4);}
-    20%{opacity:1; transform:translate(-50%,-50%) scale(1.08);}
-    70%{opacity:1; transform:translate(-50%,-130%) scale(0.95);}
-    100%{opacity:0; transform:translate(-50%,-160%) scale(0.8);}
+    15%{opacity:1; transform:translate(-50%,-50%) scale(1.1);}
+    40%{opacity:1; transform:translate(-50%,-50%) scale(1.0);}
+    100%{opacity:0; transform:translate(-50%,-140%) scale(0.2);}
   }
   .perfect-badge {
     position:fixed; top:42%; left:50%;
@@ -469,22 +474,19 @@ function spawnMarbles(text) {
   const centerX = particleCanvas.width / 2;
   const centerY = particleCanvas.height * 0.4;
 
-  const base = Math.floor(text.length * 1.0) + 2;
-  const totalMarbles = Math.max(0, Math.round(base * (0.25 + Math.random() * 0.85)));
+  const base = Math.floor(text.length * 0.9);
+  const totalMarbles = Math.max(0, Math.round(base * (0.2 + Math.random() * 1.0)));
 
   let sizeRange, tier;
-  if (totalMarbles <= 5) {
-    // 普通：无特效
-    sizeRange = [3, 8]; tier = 'normal';
-  } else if (totalMarbles <= 9) {
-    // NO：抖动 + 小字飘走
-    sizeRange = [5, 10]; tier = 'no';
-  } else if (totalMarbles <= 12) {
-    // WOW：脉冲呼吸 + 蓝色闪光
-    sizeRange = [3, 8]; tier = 'wow';
-  } else {
-    // PERFECT：弹珠雨 + 白光
+  if (totalMarbles <= 2) {
+    // NO：弹珠极少 → 抖动更强（无文字）
+    sizeRange = [6, 11]; tier = 'no';
+  } else if (totalMarbles >= 11) {
+    // PERFECT：弹珠很多 → 渐出飘走badge + 弹珠雨
     sizeRange = [2, 5]; tier = 'perfect';
+  } else {
+    // 普通档：无特效，纯弹珠
+    sizeRange = [3, 8]; tier = 'normal';
   }
 
   for (let i = 0; i < totalMarbles; i++) {
@@ -603,50 +605,20 @@ function triggerTierEffect(tier) {
     return;
 
   } else if (tier === 'no') {
+    // NO：抖动加强 + 强紫色光晕（无文字badge）
     lyricsSection.classList.remove('tier-no');
     void lyricsSection.offsetWidth;
     lyricsSection.classList.add('tier-no');
-    setTimeout(() => lyricsSection.classList.remove('tier-no'), 400);
+    setTimeout(() => lyricsSection.classList.remove('tier-no'), 600);
 
-    const badge = document.createElement('div');
-    badge.className = 'no-badge';
-    badge.textContent = '😅 nice try';
-    document.body.appendChild(badge);
-    setTimeout(() => badge.remove(), 1300);
-
-  } else if (tier === 'wow') {
-    lyricsSection.classList.remove('tier-wow');
-    void lyricsSection.offsetWidth;
-    lyricsSection.classList.add('tier-wow');
-    setTimeout(() => lyricsSection.classList.remove('tier-wow'), 400);
-
-    document.body.classList.remove('tier-flash-wow');
-    void document.body.offsetWidth;
-    document.body.classList.add('tier-flash-wow');
-    setTimeout(() => document.body.classList.remove('tier-flash-wow'), 400);
-
-    // 封面光环脉冲呼吸（心跳）
-    const ring = document.querySelector('.cover-ring');
-    if (ring) {
-      ring.classList.remove('heart-beat');
-      void ring.offsetWidth;
-      ring.classList.add('heart-beat');
-      setTimeout(() => ring.classList.remove('heart-beat'), 900);
-    }
-
-    // 光环扩散
-    const expandRing = document.createElement('div');
-    expandRing.style.cssText = 'position:fixed;top:42%;left:50%;width:80px;height:80px;margin-left:-40px;margin-top:-40px;border-radius:50%;border:2px solid rgba(108,154,196,0.55);pointer-events:none;z-index:199;animation:ring-expand 0.7s ease-out forwards;';
-    document.body.appendChild(expandRing);
-    setTimeout(() => expandRing.remove(), 750);
-
-    const badge = document.createElement('div');
-    badge.className = 'wow-badge';
-    badge.textContent = '🔥 wow';
-    document.body.appendChild(badge);
-    setTimeout(() => badge.remove(), 1700);
+    // 全屏紫色闪光
+    const flash = document.createElement('div');
+    flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 42%, rgba(167,139,218,0.35) 0%, transparent 70%);pointer-events:none;z-index:150;animation:flash-wow 0.5s ease-out forwards;';
+    document.body.appendChild(flash);
+    setTimeout(() => flash.remove(), 550);
 
   } else if (tier === 'perfect') {
+    // PERFECT：渐出飘走badge + 弹珠雨（恢复最初满意的版本）
     document.body.classList.remove('tier-perfect');
     void document.body.offsetWidth;
     document.body.classList.add('tier-perfect');
