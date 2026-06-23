@@ -699,11 +699,31 @@ function generateShareCard() {
   ctx.font = '12px -apple-system, sans-serif';
   ctx.fillText('[扫码收听]', 200, 485);
 
-  // 下载图片
-  const link = document.createElement('a');
-  link.download = '借过一下_Chris_分享卡.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
+  // 复制到剪贴板
+  canvas.toBlob(async (blob) => {
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({ 'image/png': blob })
+      ]);
+      // 显示反馈
+      const btn = document.getElementById('shareBtn');
+      const origText = btn.innerHTML;
+      btn.innerHTML = '✅ 已复制到剪贴板';
+      btn.style.background = 'rgba(108,154,196,0.3)';
+      btn.style.borderColor = 'rgba(108,154,196,0.6)';
+      setTimeout(() => {
+        btn.innerHTML = origText;
+        btn.style.background = 'rgba(108,154,196,0.15)';
+        btn.style.borderColor = 'rgba(108,154,196,0.3)';
+      }, 2000);
+    } catch(err) {
+      // 剪贴板失败时回退到下载
+      const link = document.createElement('a');
+      link.download = '借过一下_Chris_分享卡.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  });
 }
 
 // 圆角矩形辅助函数
