@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- 寰俊/绀句氦骞冲彴鍒嗕韩鍗＄墖 OG鏍囩 -->
+<!-- 微信/社交平台分享卡片 OG标签 -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="馃幍 鍊熻繃涓€涓?(Live) - Cover by Chris">
-<meta property="og:description" content="缈诲敱浣滃搧 路 闄堝皬鏄ャ€婂€熻繃涓€涓嬨€?绮よ鐗?">
+<meta property="og:title" content="🎵 借过一下 (Live) - Cover by Chris">
+<meta property="og:description" content="翻唱作品 · 陈小春《借过一下》(粤语版)">
 <meta property="og:image" content="https://chrischou1130.github.io/cover/cover.jpg">
 <meta property="og:url" content="https://chrischou1130.github.io/cover/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="鍊熻繃涓€涓?- Cover by Chris">
-<meta name="twitter:description" content="缈诲敱浣滃搧 路 闄堝皬鏄ャ€婂€熻繃涓€涓嬨€?绮よ鐗?">
+<meta name="twitter:title" content="借过一下 - Cover by Chris">
+<meta name="twitter:description" content="翻唱作品 · 陈小春《借过一下》(粤语版)">
 <meta name="twitter:image" content="https://chrischou1130.github.io/cover/cover.jpg">
-<meta itemprop="name" content="鍊熻繃涓€涓?- Cover by Chris">
+<meta itemprop="name" content="借过一下 - Cover by Chris">
 <meta itemprop="image" content="https://chrischou1130.github.io/cover/cover.jpg">
-<meta itemprop="description" content="缈诲敱浣滃搧 路 鐐瑰嚮鎾斁">
+<meta itemprop="description" content="翻唱作品 · 点击播放">
 
-<title>鍊熻繃涓€涓?- Cover by Chris</title>
+<title>借过一下 - Cover by Chris</title>
 
 <style>
   :root {
@@ -41,14 +41,14 @@
     overflow:hidden; user-select:none; -webkit-user-select:none;
   }
 
-  /* 鐜鍏夎儗鏅?*/
+  /* 环境光背景 */
   .ambient-bg { position:fixed; inset:0; pointer-events:none; z-index:0; }
   .ambient-orb { position:absolute; border-radius:50%; filter:blur(90px); opacity:0.18; animation:orbFloat 14s ease-in-out infinite; }
   .ambient-orb:nth-child(1) { width:300px; height:300px; background:#376392; top:-80px; left:-80px; }
   .ambient-orb:nth-child(2) { width:260px; height:260px; background:#2B4868; bottom:-60px; right:-60px; animation-delay:-5s; }
   @keyframes orbFloat { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(25px,-25px) scale(1.05);} }
 
-  /* ===== 鎾斁鍣ㄤ富浣?===== */
+  /* ===== 播放器主体 ===== */
   .player {
     position:relative; z-index:1;
     width:100%; max-width:420px;
@@ -56,13 +56,13 @@
     display:flex; flex-direction:column; align-items:center;
   }
 
-  /* ===== 灏侀潰 + 鍛煎惛鍏夌幆 ===== */
+  /* ===== 封面 + 呼吸光环 ===== */
   .cover-wrapper {
     position:relative; margin-bottom:16px; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
   }
 
-  /* 鍗曚竴鍛煎惛鍏夌幆 */
+  /* 单一呼吸光环 */
   .aurora-ring {
     position:absolute;
     width:192px; height:192px;
@@ -94,7 +94,7 @@
     }
   }
 
-  /* 灏侀潰涓讳綋 */
+  /* 封面主体 */
   .cover {
     width:150px; height:150px; border-radius:50%; object-fit:cover;
     box-shadow:
@@ -106,7 +106,7 @@
   .cover.paused { animation-play-state:paused; }
   @keyframes spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
-  /* 灏侀潰鏃嬭浆鍏夋枒 鈥?鐢ㄤ吉鍏冪礌瀹炵幇锛岀‘淇濊窡闅忓皝闈㈡棆杞?*/
+  /* 封面旋转光斑 — 用伪元素实现，确保跟随封面旋转 */
   .cover-shine {
     display:none;
   }
@@ -123,7 +123,7 @@
     z-index:3;
   }
 
-  /* ===== 姝屾洸淇℃伅 ===== */
+  /* ===== 歌曲信息 ===== */
   .song-info { text-align:center; margin-bottom:4px; }
   .song-title { font-size:18px; font-weight:600; letter-spacing:0.5px; }
   .song-artist {
@@ -132,7 +132,7 @@
     text-shadow:0 0 8px rgba(108,154,196,0.3);
   }
 
-  /* ===== 姝岃瘝鍖?===== */
+  /* ===== 歌词区 ===== */
   .lyrics-section {
     flex:1; width:100%; min-height:160px;
     display:flex; flex-direction:column; justify-content:center; align-items:center;
@@ -140,10 +140,10 @@
     perspective:400px;
   }
 
-  /* 姝岃瘝鍖烘棤棰濆鑳屾櫙 鈥?涓庢暣浣撹儗鏅瀺鍚?*/
+  /* 歌词区无额外背景 — 与整体背景融合 */
   .lyrics-section::before { display:none; }
 
-  /* 姝岃瘝灞?*/
+  /* 歌词层 */
   .lyric-prev {
     font-size:14px; font-weight:400; text-align:center;
     color:rgba(255,255,255,0.12);
@@ -162,7 +162,7 @@
     position:relative;
     text-shadow:0 0 20px rgba(108,154,196,0.25);
   }
-  /* 楂樹寒姝岃瘝鑳岄潰鍛煎惛鍏夋檿 鈥?绱ц创鏂囧瓧鐨勫井寮辫剦鍔?*/
+  /* 高亮歌词背面呼吸光晕 — 紧贴文字的微弱脉动 */
   .lyric-current::before {
     content:'';
     position:absolute;
@@ -197,7 +197,7 @@
     padding:0 16px;
   }
 
-  /* 姝岃瘝瀛?鈥?閫愬瓧娣″叆 */
+  /* 歌词字 — 逐字淡入 */
   .lyric-char {
     display:inline-block; opacity:0;
     transform:translateY(12px) scale(0.9);
@@ -215,7 +215,7 @@
     transition:all 0.5s cubic-bezier(.4,0,.2,1) !important;
   }
 
-  /* ===== 杩涘害鏉?===== */
+  /* ===== 进度条 ===== */
   .progress-section { width:100%; margin-bottom:10px; }
   .progress-bar {
     position:relative; height:3px;
@@ -235,7 +235,7 @@
   }
   .progress-bar:hover .progress-fill { box-shadow:0 0 14px rgba(108,154,196,0.55); }
 
-  /* ===== 杩涘害鏉′笂鏂瑰懠鍚稿厜鏅?鈥?鍗囩骇鐗?===== */
+  /* ===== 进度条上方呼吸光晕 — 升级版 ===== */
   .progress-glow {
     width:88%; height:6px;
     margin:0 auto 2px;
@@ -243,7 +243,7 @@
     position:relative;
     pointer-events:none;
   }
-  /* 绗竴灞傦細瀹藉箙鏌斿厜搴曞骇 */
+  /* 第一层：宽幅柔光底座 */
   .progress-glow::before {
     content:'';
     position:absolute; inset:-8px -10%;
@@ -257,7 +257,7 @@
     border-radius:20px;
     filter:blur(3px);
   }
-  /* 绗簩灞傦細鏍稿績鍙戝厜绾?*/
+  /* 第二层：核心发光线 */
   .progress-glow::after {
     content:'';
     position:absolute;
@@ -320,7 +320,7 @@
   .progress-bar:active .progress-thumb { transform:translate(-50%,-50%) scale(1); }
   .time-row { display:flex; justify-content:space-between; font-size:11px; color:var(--text-dim); }
 
-  /* ===== 鎺у埗鎸夐挳 ===== */
+  /* ===== 控制按钮 ===== */
   .controls { display:flex; align-items:center; justify-content:center; gap:32px; }
   .ctrl-btn {
     background:none; border:none; cursor:pointer;
@@ -342,7 +342,7 @@
   }
   .ctrl-btn.play-pause svg { fill:#fff; width:24px; height:24px; }
 
-  /* ===== 鍒嗕韩鍗℃寜閽?===== */
+  /* ===== 分享卡按钮 ===== */
   .share-btn {
     margin-top:20px;
     padding:12px 28px;
@@ -369,7 +369,7 @@
     fill:currentColor;
   }
 
-  /* ===== 姝岃瘝鍒囨崲鏌斿拰鍏夋晥 ===== */
+  /* ===== 歌词切换柔和光效 ===== */
   @keyframes lyricFadeIn {
     0%{opacity:0; transform:translateY(8px) scale(0.97);}
     100%{opacity:1; transform:translateY(0) scale(1);}
@@ -400,7 +400,7 @@
   </div>
 
   <div class="song-info">
-    <div class="song-title">鍊熻繃涓€涓?/div>
+    <div class="song-title">借过一下</div>
     <div class="song-artist">Cover by Chris</div>
   </div>
 
@@ -411,7 +411,7 @@
   </div>
 
   <div class="progress-section">
-    <!-- 杩涘害鏉′笂鏂瑰懠鍚稿厜鏅?-->
+    <!-- 进度条上方呼吸光晕 -->
     <div class="progress-glow"></div>
     <div class="progress-bar" id="progressBar">
       <div class="progress-fill" id="progressFill"></div>
@@ -436,61 +436,62 @@
     </button>
   </div>
 
-  <!-- 鍒嗕韩鍗℃寜閽?-->
+  <!-- 分享卡按钮 -->
   <button class="share-btn" id="shareBtn" onclick="generateShareCard()">
     <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.22-.09.45-.09.69 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>
-    鐢熸垚鍒嗕韩鍗?  </button>
+    生成分享卡
+  </button>
 </div>
 
 <audio id="audio" preload="metadata" src="song.mp3"></audio>
 
-<!-- 闅愯棌鐨?Canvas 鐢ㄤ簬鐢熸垚鍒嗕韩鍗?-->
+<!-- 隐藏的 Canvas 用于生成分享卡 -->
 <canvas id="shareCanvas" style="display:none;"></canvas>
 
 <script>
 const lyricsData = [
-  {t:14.68,l:'浣犲姖鎴戣鏀句綆鍋忎笉鐩镐俊鍛芥暟'},
-  {t:21.82,l:'涓栫晫澶様澶箍璋佽兘鎷︿綇閭ｈ矾'},
-  {t:29.26,l:'琛ㄩ潰娓呬笌楂樺績閲岄獎鍙堣簛'},
-  {t:36.61,l:'浣犲唨鐩煎摢涓ソ锛熷皬涓戣埇鍞犲槇'},
-  {t:43.90,l:'浣犳渶鐖辨斁鍐锋灙鍙栧疇鍝椾紬璺暟'},
-  {t:51.43,l:'鏆楅噷鎭舵剰涓激绗戦噷钘忕潃灏栧垁'},
-  {t:54.67,l:'鎵嬩笂浜変笌鎶㈠槾閲岀粰璇憡'},
-  {t:65.92,l:'鎯簡瑕佸幓鎽勪綅閮藉缁堝緬鍔?},
-  {t:71.80,l:'鏃犳儳浣犲張瀵归箍鍙仛椹惂'},
-  {t:76.45,l:'鍊熻繃涓€涓?},
-  {t:79.36,l:'瀛よ韩鍍秺鍗冨北鍐嶆浮闄╁叧'},
-  {t:83.53,l:'鎴戠礌琛ｈ繃娉ユ江'},
-  {t:86.77,l:'鏈涘ぇ浜洪ザ鎭曟垜涓嶄細鎶樿繑'},
-  {t:90.91,l:'韪忕牬閫嗗鏃犻檺'},
-  {t:94.09,l:'鎬绘兂璇曠潃鍏滃集瑕佽矾瀹藉潶'},
-  {t:98.23,l:'浣曟潵鎹峰緞浣犳嫞锛?},
-  {t:101.44,l:'杩欑媯婢滄潵鍔涙尳'},
-  {t:103.75,l:'浜忔瑺鎴戠殑浣犲繀濂夎繕'},
-  {t:108.07,l:'閬撲笉鍚岃矾鍗冪'},
-  {t:111.76,l:'浣曞繀鏉ヨ鐩稿啿'},
-  {t:115.24,l:'浜鸿拷姊﹂€愭竻椋?},
-  {t:119.08,l:'浣曠О浜轰綘涓嶆噦'},
-  {t:124.60,l:'瀵规伓鎰忓幓鎸鸿韩鐗虹壊鎬绘湁浠ｄ环'},
-  {t:131.77,l:'绗戜綘鏈€鐖卞幓婕旇皝鏃犵憰娌℃湁鍚э紵'},
-  {t:140.56,l:'榛戠櫧棰犱笌鍊掑畧鎴戝績鏈€?},
-  {t:146.53,l:'鍊熻繃鍗婂鎿﹁韩鏀惰捣鎸囨暀鍚?},
-  {t:167.38,l:'瀛よ韩鍍秺鍗冨北鍐嶆浮闄╁叧'},
-  {t:171.40,l:'鎴戠礌琛ｈ繃娉ユ江'},
-  {t:174.61,l:'鏈涘ぇ浜洪ザ鎭曟垜涓嶄細鎶樿繑'},
-  {t:178.84,l:'韪忕牬閫嗗鏃犻檺'},
-  {t:181.99,l:'鎬绘兂璇曠潃鍏滃集瑕佽矾瀹藉潶'},
-  {t:186.16,l:'浣曟潵鎹峰緞浣犳嫞锛?},
-  {t:189.40,l:'杩欑媯婢滄潵鍔涙尳'},
-  {t:191.68,l:'浜忔瑺鎴戠殑浣犲繀濂夎繕'},
-  {t:195.91,l:'閬撲笉鍚岃矾鍗冪'},
-  {t:199.69,l:'浣曞繀鏉ヨ鐩稿啿'},
-  {t:200.98,l:'浜鸿拷姊﹂€愭竻椋?},
-  {t:206.98,l:'浣曠О浜轰綘涓嶆噦'},
-  {t:216.79,l:'鍝€曡繃娉ユ锭姹℃笉鏌撴垜琛?},
-  {t:224.14,l:'鎳掔悊鏈櫔浣犱簤蹇參'},
-  {t:231.55,l:'鐪嬩笘涓婃槑鏆楀垵蹇冨摢浼氬噺'},
-  {t:238.87,l:'涓庢湕鏈堝悓寰€娓″彉骞?}
+  {t:14.68,l:'你劝我要放低偏不相信命数'},
+  {t:21.82,l:'世界太阔太广谁能拦住那路'},
+  {t:29.26,l:'表面清与高心里骄又躁'},
+  {t:36.61,l:'你冀盼哪个好？小丑般唠嘈'},
+  {t:43.90,l:'你最爱放冷枪取宠哗众路数'},
+  {t:51.43,l:'暗里恶意中伤笑里藏着尖刀'},
+  {t:54.67,l:'手上争与抢嘴里给诬告'},
+  {t:65.92,l:'惯了要去摄位都始终徒劳'},
+  {t:71.80,l:'无惧你又对鹿叫做马吧'},
+  {t:76.45,l:'借过一下'},
+  {t:79.36,l:'孤身僭越千山再渡险关'},
+  {t:83.53,l:'我素衣过泥潭'},
+  {t:86.77,l:'望大人饶恕我不会折返'},
+  {t:90.91,l:'踏破逆境无限'},
+  {t:94.09,l:'总想试着兜弯要路宽坦'},
+  {t:98.23,l:'何来捷径你拣？'},
+  {t:101.44,l:'这狂澜来力挽'},
+  {t:103.75,l:'亏欠我的你必奉还'},
+  {t:108.07,l:'道不同路千种'},
+  {t:111.76,l:'何必来说相冲'},
+  {t:115.24,l:'人追梦逐清风'},
+  {t:119.08,l:'何称人你不懂'},
+  {t:124.60,l:'对恶意去挺身牺牲总有代价'},
+  {t:131.77,l:'笑你最爱去演谁无瑕没有吧？'},
+  {t:140.56,l:'黑白颠与倒守我心未怕'},
+  {t:146.53,l:'借过半寸擦身收起指教吧'},
+  {t:167.38,l:'孤身僭越千山再渡险关'},
+  {t:171.40,l:'我素衣过泥潭'},
+  {t:174.61,l:'望大人饶恕我不会折返'},
+  {t:178.84,l:'踏破逆境无限'},
+  {t:181.99,l:'总想试着兜弯要路宽坦'},
+  {t:186.16,l:'何来捷径你拣？'},
+  {t:189.40,l:'这狂澜来力挽'},
+  {t:191.68,l:'亏欠我的你必奉还'},
+  {t:195.91,l:'道不同路千种'},
+  {t:199.69,l:'何必来说相冲'},
+  {t:200.98,l:'人追梦逐清风'},
+  {t:206.98,l:'何称人你不懂'},
+  {t:216.79,l:'哪怕过泥涧污渍染我衫'},
+  {t:224.14,l:'懒理未陪你争快慢'},
+  {t:231.55,l:'看世上明暗初心哪会减'},
+  {t:238.87,l:'与朗月同往渡变幻'}
 ];
 
 const audio = document.getElementById('audio');
@@ -515,7 +516,7 @@ let isPlaying = false;
 
 function togglePlay() { isPlaying ? pause() : play(); }
 
-/* 姝岃瘝閫昏緫 */
+/* 歌词逻辑 */
 function findLine(time) {
   if (time < lyricsData[0].t) return -1;
   for (let i = lyricsData.length - 1; i >= 0; i--) {
@@ -560,7 +561,7 @@ function play() {
     iconPlay.style.display = 'none';
     iconPause.style.display = 'block';
     albumCover.classList.remove('paused');
-  }).catch(e => console.log('鎾斁澶辫触', e));
+  }).catch(e => console.log('播放失败', e));
 }
 
 function pause() {
@@ -607,16 +608,16 @@ function seek(e) {
   audio.currentTime = Math.max(0, Math.min(1, (t.clientX - r.left) / r.width)) * audio.duration;
 }
 
-/* ===== 鐢熸垚鍒嗕韩鍗?===== */
+/* ===== 生成分享卡 ===== */
 function generateShareCard() {
   const canvas = document.getElementById('shareCanvas');
   const ctx = canvas.getContext('2d');
 
-  // 灏哄锛?00x500 (閫傚悎寰俊鍒嗕韩)
+  // 尺寸：400x500 (适合微信分享)
   canvas.width = 400;
   canvas.height = 500;
 
-  // 娓愬彉鑳屾櫙
+  // 渐变背景
   const bgGrad = ctx.createLinearGradient(0, 0, 400, 500);
   bgGrad.addColorStop(0, '#2B4868');
   bgGrad.addColorStop(0.5, '#376392');
@@ -624,29 +625,30 @@ function generateShareCard() {
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, 400, 500);
 
-  // 杈规瑁呴グ
+  // 边框装饰
   ctx.strokeStyle = 'rgba(255,255,255,0.1)';
   ctx.lineWidth = 1;
   ctx.strokeRect(20, 20, 360, 460);
   ctx.strokeRect(30, 30, 340, 440);
 
-  // 灏侀潰鍦嗗舰
+  // 封面圆形
   const coverSize = 180;
   const coverX = 200;
   const coverY = 130;
 
-  // 灏侀潰闃村奖
+  // 封面阴影
   ctx.shadowColor = 'rgba(0,0,0,0.4)';
   ctx.shadowBlur = 30;
   ctx.shadowOffsetY = 10;
 
-  // 缁樺埗灏侀潰鍦?  ctx.save();
+  // 绘制封面圆
+  ctx.save();
   ctx.beginPath();
   ctx.arc(coverX, coverY, coverSize/2, 0, Math.PI * 2);
   ctx.closePath();
   ctx.clip();
 
-  // 鍔犺浇灏侀潰鍥剧墖
+  // 加载封面图片
   const coverImg = albumCover;
   const aspectRatio = coverImg.naturalWidth / coverImg.naturalHeight;
   let drawWidth, drawHeight;
@@ -660,50 +662,51 @@ function generateShareCard() {
   ctx.drawImage(coverImg, coverX - drawWidth/2, coverY - drawHeight/2, drawWidth, drawHeight);
   ctx.restore();
 
-  // 閲嶇疆闃村奖
+  // 重置阴影
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetY = 0;
 
-  // 灏侀潰杈圭紭鍏夌幆
+  // 封面边缘光环
   ctx.strokeStyle = 'rgba(255,255,255,0.15)';
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.arc(coverX, coverY, coverSize/2 + 8, 0, Math.PI * 2);
   ctx.stroke();
 
-  // 姝屾洸淇℃伅
+  // 歌曲信息
   ctx.fillStyle = '#ffffff';
   ctx.font = 'bold 32px -apple-system, "SF Pro Display", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('鍊熻繃涓€涓?, 200, 270);
+  ctx.fillText('借过一下', 200, 270);
 
   ctx.fillStyle = 'rgba(255,255,255,0.85)';
   ctx.font = '500 16px -apple-system, sans-serif';
   ctx.fillText('Cover by Chris', 200, 295);
 
-  // 鏁呬簨璇?  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  // 故事语
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
   ctx.font = 'italic 14px -apple-system, sans-serif';
-  ctx.fillText('"杩欓姝屽敱鐨勬槸閭ｇ娆犳瑺鐨勬絿娲掓劅"', 200, 330);
-  ctx.fillText('褰曞畬瑙夊緱鏁翠釜浜洪兘椋樹簡"', 200, 350);
+  ctx.fillText('"这首歌唱的是那种欠欠的潇洒感"', 200, 330);
+  ctx.fillText('录完觉得整个人都飘了"', 200, 350);
 
-  // 浜岀淮鐮佸崰浣嶆
+  // 二维码占位框
   ctx.fillStyle = '#ffffff';
   roundRect(ctx, 160, 380, 80, 80, 8);
   ctx.fill();
 
   ctx.fillStyle = '#333';
   ctx.font = '12px -apple-system, sans-serif';
-  ctx.fillText('[鎵爜鏀跺惉]', 200, 485);
+  ctx.fillText('[扫码收听]', 200, 485);
 
-  // 涓嬭浇鍥剧墖
+  // 下载图片
   const link = document.createElement('a');
-  link.download = '鍊熻繃涓€涓媉Chris_鍒嗕韩鍗?png';
+  link.download = '借过一下_Chris_分享卡.png';
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
 
-// 鍦嗚鐭╁舰杈呭姪鍑芥暟
+// 圆角矩形辅助函数
 function roundRect(ctx, x, y, width, height, radius) {
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
