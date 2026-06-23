@@ -609,6 +609,7 @@ function seek(e) {
 }
 
 /* ===== 生成分享卡 ===== */
+/* 暗夜氛围版 — 与播放器风格统一 */
 function generateShareCard() {
   const canvas = document.getElementById('shareCanvas');
   const ctx = canvas.getContext('2d');
@@ -617,38 +618,60 @@ function generateShareCard() {
   canvas.width = 400;
   canvas.height = 500;
 
-  // 渐变背景
-  const bgGrad = ctx.createLinearGradient(0, 0, 400, 500);
-  bgGrad.addColorStop(0, '#2B4868');
-  bgGrad.addColorStop(0.5, '#376392');
-  bgGrad.addColorStop(1, '#6C9AC4');
+  // ===== 1. 深空背景 =====
+  const bgGrad = ctx.createRadialGradient(200, 200, 50, 200, 200, 400);
+  bgGrad.addColorStop(0, '#0f1520');
+  bgGrad.addColorStop(0.5, '#0a0e17');
+  bgGrad.addColorStop(1, '#060810');
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, 400, 500);
 
-  // 边框装饰
-  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-  ctx.lineWidth = 1;
-  ctx.strokeRect(20, 20, 360, 460);
-  ctx.strokeRect(30, 30, 340, 440);
+  // ===== 2. 环境光晕（两团蓝色柔光）=====
+  const orb1 = ctx.createRadialGradient(80, 50, 10, 80, 50, 180);
+  orb1.addColorStop(0, 'rgba(55,99,146,0.15)');
+  orb1.addColorStop(0.5, 'rgba(55,99,146,0.06)');
+  orb1.addColorStop(1, 'transparent');
+  ctx.fillStyle = orb1;
+  ctx.fillRect(0, 0, 400, 500);
 
-  // 封面圆形
-  const coverSize = 180;
+  const orb2 = ctx.createRadialGradient(350, 450, 10, 350, 450, 200);
+  orb2.addColorStop(0, 'rgba(108,154,196,0.12)');
+  orb2.addColorStop(0.5, 'rgba(108,154,196,0.04)');
+  orb2.addColorStop(1, 'transparent');
+  ctx.fillStyle = orb2;
+  ctx.fillRect(0, 0, 400, 500);
+
+  // ===== 3. 边框装饰 — 极简发光线 =====
+  ctx.strokeStyle = 'rgba(108,154,196,0.08)';
+  ctx.lineWidth = 0.5;
+  ctx.strokeRect(24, 24, 352, 452);
+
+  // ===== 4. 封面 =====
+  const coverSize = 170;
   const coverX = 200;
-  const coverY = 130;
+  const coverY = 120;
+
+  // 封面外圈呼吸光环（模拟播放器的 aurora-ring）
+  ctx.strokeStyle = 'rgba(108,154,196,0.2)';
+  ctx.lineWidth = 1.5;
+  ctx.shadowColor = 'rgba(108,154,196,0.3)';
+  ctx.shadowBlur = 25;
+  ctx.beginPath();
+  ctx.arc(coverX, coverY, coverSize/2 + 10, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.shadowBlur = 0;
 
   // 封面阴影
-  ctx.shadowColor = 'rgba(0,0,0,0.4)';
-  ctx.shadowBlur = 30;
-  ctx.shadowOffsetY = 10;
+  ctx.shadowColor = 'rgba(0,0,0,0.6)';
+  ctx.shadowBlur = 40;
+  ctx.shadowOffsetY = 8;
 
-  // 绘制封面圆
   ctx.save();
   ctx.beginPath();
   ctx.arc(coverX, coverY, coverSize/2, 0, Math.PI * 2);
   ctx.closePath();
   ctx.clip();
 
-  // 加载封面图片
   const coverImg = albumCover;
   const aspectRatio = coverImg.naturalWidth / coverImg.naturalHeight;
   let drawWidth, drawHeight;
@@ -662,62 +685,84 @@ function generateShareCard() {
   ctx.drawImage(coverImg, coverX - drawWidth/2, coverY - drawHeight/2, drawWidth, drawHeight);
   ctx.restore();
 
-  // 重置阴影
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetY = 0;
 
-  // 封面边缘光环
-  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.arc(coverX, coverY, coverSize/2 + 8, 0, Math.PI * 2);
-  ctx.stroke();
-
-  // 歌曲信息
+  // ===== 5. 歌曲信息 =====
   ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 32px -apple-system, "SF Pro Display", sans-serif';
+  ctx.font = 'bold 28px -apple-system, "SF Pro Display", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('借过一下', 200, 270);
+  ctx.shadowColor = 'rgba(108,154,196,0.2)';
+  ctx.shadowBlur = 12;
+  ctx.fillText('借过一下', 200, 250);
+  ctx.shadowBlur = 0;
 
-  ctx.fillStyle = 'rgba(255,255,255,0.85)';
-  ctx.font = '500 16px -apple-system, sans-serif';
-  ctx.fillText('Cover by Chris', 200, 295);
+  ctx.fillStyle = '#7a8ca8';
+  ctx.font = '500 14px -apple-system, sans-serif';
+  ctx.fillText('Cover by Chris', 200, 272);
 
-  // 故事语
-  ctx.fillStyle = 'rgba(255,255,255,0.7)';
-  ctx.font = 'italic 14px -apple-system, sans-serif';
-  ctx.fillText('"这首歌唱的是那种欠欠的潇洒感"', 200, 330);
-  ctx.fillText('录完觉得整个人都飘了"', 200, 350);
+  // ===== 6. 分隔线（进度条风格呼吸线）=====
+  // 渐变线：两端透明中间微光
+  const lineGrad = ctx.createLinearGradient(120, 0, 280, 0);
+  lineGrad.addColorStop(0, 'transparent');
+  lineGrad.addColorStop(0.3, 'rgba(108,154,196,0.08)');
+  lineGrad.addColorStop(0.5, 'rgba(108,154,196,0.15)');
+  lineGrad.addColorStop(0.7, 'rgba(108,154,196,0.08)');
+  lineGrad.addColorStop(1, 'transparent');
+  ctx.fillStyle = lineGrad;
+  ctx.fillRect(120, 292, 160, 1);
 
-  // 二维码占位框
-  ctx.fillStyle = '#ffffff';
-  roundRect(ctx, 160, 380, 80, 80, 8);
+  // ===== 7. 故事语（用斜体，减弱透明度）=====
+  ctx.fillStyle = 'rgba(204,216,235,0.6)';
+  ctx.font = 'italic 13px -apple-system, sans-serif';
+  ctx.fillText('这首歌唱的是那种', 200, 322);
+  ctx.fillText('欠欠的潇洒感', 200, 340);
+
+  // ===== 8. 底部二维码区域 =====
+  // 二维码背景盒 — 半透明白色
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  roundRect(ctx, 155, 372, 90, 90, 12);
   ctx.fill();
 
-  ctx.fillStyle = '#333';
-  ctx.font = '12px -apple-system, sans-serif';
-  ctx.fillText('[扫码收听]', 200, 485);
+  // 二维码边框（虚线感）
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, 155, 372, 90, 90, 12);
+  ctx.stroke();
 
-  // 复制到剪贴板
+  // 中心二维码图标
+  ctx.fillStyle = 'rgba(255,255,255,0.12)';
+  ctx.font = '10px -apple-system, sans-serif';
+  ctx.fillText('▣', 200, 402);
+  ctx.font = 'bold 9px -apple-system, sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.15)';
+  ctx.fillText('QR', 200, 416);
+
+  // 二维码提示语
+  ctx.fillStyle = 'rgba(204,216,235,0.35)';
+  ctx.font = '11px -apple-system, sans-serif';
+  ctx.fillText('扫描收听完整版', 200, 484);
+
+  // ===== 复制到剪贴板 =====
   canvas.toBlob(async (blob) => {
     try {
       await navigator.clipboard.write([
         new ClipboardItem({ 'image/png': blob })
       ]);
-      // 显示反馈
       const btn = document.getElementById('shareBtn');
-      const origText = btn.innerHTML;
-      btn.innerHTML = '✅ 已复制到剪贴板';
+      const origHTML = btn.innerHTML;
+      const origBg = btn.style.background;
+      const origBorder = btn.style.borderColor;
+      btn.innerHTML = '✅ 已复制';
       btn.style.background = 'rgba(108,154,196,0.3)';
       btn.style.borderColor = 'rgba(108,154,196,0.6)';
       setTimeout(() => {
-        btn.innerHTML = origText;
-        btn.style.background = 'rgba(108,154,196,0.15)';
-        btn.style.borderColor = 'rgba(108,154,196,0.3)';
+        btn.innerHTML = origHTML;
+        btn.style.background = origBg;
+        btn.style.borderColor = origBorder;
       }, 2000);
     } catch(err) {
-      // 剪贴板失败时回退到下载
       const link = document.createElement('a');
       link.download = '借过一下_Chris_分享卡.png';
       link.href = canvas.toDataURL('image/png');
